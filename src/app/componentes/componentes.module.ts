@@ -8,6 +8,7 @@ import { ValidacionDirective } from '../directivas/validacion.directive';
 @NgModule({
   declarations: [
     FormComponent,
+    ValidacionDirective
   ],
   imports: [
     CommonModule,
