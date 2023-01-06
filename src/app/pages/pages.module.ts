@@ -11,14 +11,10 @@ import { ValidacionDirective } from '../directivas/validacion.directive';
 @NgModule({
   declarations: [
     HomeComponent,
-    ValidacionDirective
   ],
   imports: [
     CommonModule,
     ComponentesModule,
-  ],exports:[
-    HomeComponent,
-    ValidacionDirective
   ]
 })
 export class PagesModule { }
