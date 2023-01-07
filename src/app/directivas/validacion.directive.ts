@@ -1,21 +1,54 @@
-import { Directive,ElementRef,HostListener, OnInit } from '@angular/core';
+import { Directive,ElementRef,HostListener, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { FormControl  } from '@angular/forms';
 
 @Directive({
   selector: '[appValidacion]'
 })
 export class ValidacionDirective implements OnInit {
 
-  constructor(private me:ElementRef) {
+  @Input() inputcontrol!:FormControl;
+  @Output() onEnviomensajeError= new EventEmitter();
 
-   }
-@HostListener('click') onMouseEnter(){
-    console.log('entro al elemento' );
-    this.me.nativeElement.style.backgroundColor = 'yellow';
+  constructor(private me:ElementRef) {}
 
+  @HostListener('input') onInput(){
+
+    this.validar();
   }
+  @HostListener('blur') onClick(){
+
+    this.validar();
+   
+  }
+
   ngOnInit(): void {
-    console.log(this.me);
-    this.me.nativeElement.style.backgroundColor = "RED";
-  
+    //console.log(this.inputcontrol)
+  }
+
+  validar(){
+    if (this.inputcontrol.invalid){
+      
+      if(this.inputcontrol.errors?.['required']){
+        this.onEnviomensajeError.emit("El campo es requerido");
+      }else if(this.inputcontrol.errors?.['pattern'] ){
+        if((this.me.nativeElement as HTMLInputElement).name=='correo'){
+          this.onEnviomensajeError.emit("correo invalido ejemplo: Alondra@gmail.com");
+        }else if((this.me.nativeElement as HTMLInputElement).name=='telefono') {
+          this.onEnviomensajeError.emit("solo se acepta 9 digitos");
+        }
+       // console.log((this.me.nativeElement as HTMLInputElement).name);
+    
+      }else if (this.inputcontrol.errors?.['minlength']){
+        this.onEnviomensajeError.emit("minimo de caracteres" + this.inputcontrol.errors?.['minlength'].requiredLength);
+      }
+      
+      this.me.nativeElement.classList.add("is-invalid");
+      this.me.nativeElement.classList.remove("is-valid");
+    }else{
+      this.me.nativeElement.classList.add("is-valid");
+      this.me.nativeElement.classList.remove("is-invalid");
+      this.onEnviomensajeError.emit(null);
+
+    }
   }
 }
