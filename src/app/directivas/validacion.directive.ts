@@ -42,12 +42,12 @@ export class ValidacionDirective implements OnInit {
         this.onEnviomensajeError.emit("minimo de caracteres" + this.inputcontrol.errors?.['minlength'].requiredLength);
       }
       
-      this.me.nativeElement.classList.add("is-invalid");
+      this.me.nativeElement.classList.add("is-invalid");//añade y remueve clase
       this.me.nativeElement.classList.remove("is-valid");
     }else{
-      this.me.nativeElement.classList.add("is-valid");
+      this.me.nativeElement.classList.add("is-valid");//añade y remueve clase
       this.me.nativeElement.classList.remove("is-invalid");
-      this.onEnviomensajeError.emit(null);
+      this.onEnviomensajeError.emit(null);//porque no hay error no envia
 
     }
   }

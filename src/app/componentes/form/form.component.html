@@ -1,60 +1,74 @@
 <div class="container">
     <div class="row d-flex justify-content-center align-items-center">
-        <div class="col-md-6 col-sm-8 col-xs-12">
+        <div class="col-md-10 col-sm-12 col-xs-12">
             <!------5.referenciamos al formulario con la variable del .ts------>
             <form class="border p-5" [formGroup]="formRegistro" (ngSubmit)="enviar()">
                 <!--------6. asignamos los nombres con formcontrolname------>
-                <!------nombre------>
-                <div class="mb-3">
-                  <label for="nombre" class="form-label">Nombre</label>
-                  <input type="email" class="form-control" name="nombre" id="nombre" placeholder="Nombre" formControlName="nombre" appValidacion [inputcontrol]="getControl('nombre')" (onEnviomensajeError)="mensajesdeErrores.errornombre=$event" >
+                <div class="row">
+                  <div class="col-md-6 col-sm-6 col-xs-12">
+                    <!------nombre------>
+                                                                                                                                    <!-----envio el la funcion al input de la directiva----------el evento emitido de la directiva lo igualo -------->
+                    <div class="mb-3">
+                      <label for="nombre" class="form-label">Nombre</label>
+                      <input type="email" class="form-control" name="nombre" id="nombre" placeholder="Nombre" formControlName="nombre" appValidacion [inputcontrol]="getControl('nombre')" (onEnviomensajeError)="mensajesdeErrores.errornombre=$event" >
+                        <p *ngIf="mensajesdeErrores.errornombre"  class="text-light px-3 p-1 bg-danger bg-opacity-75"><i class="fa-solid fa-square-xmark pe-2"></i> {{mensajesdeErrores.errornombre}}</p>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-sm-6 col-xs-12">
+                      <!------correo------>
+                    <div class="mb-3">
+                      <label for="correo" class="form-label">Correo</label>
+                      <input type="text" class="form-control" name="correo" id="correo" placeholder="alondra@gmail.com" formControlName="correo" appValidacion [inputcontrol]="getControl('correo')" (onEnviomensajeError)="mensajesdeErrores.errorcorreo=$event" >
+                      <p *ngIf="mensajesdeErrores.errorcorreo" class="text-light px-3 p-1 bg-danger bg-opacity-75"> <i class="fa-solid fa-square-xmark pe-2"></i> {{mensajesdeErrores.errorcorreo}}</p>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-sm-6 col-xs-12">
+                      <!------telefono------>
+                    <div class="mb-3">
+                      <label for="telefono" class="form-label">Telefono</label>
+                      <input type="number" class="form-control" name="telefono" id="telefono" placeholder="999666333" formControlName="telefono" appValidacion [inputcontrol]="getControl('telefono')" (onEnviomensajeError)="mensajesdeErrores.errortelefono=$event">
+                      <div>
+                        <p *ngIf="mensajesdeErrores.errortelefono" class="text-light px-3 p-1 bg-danger bg-opacity-75" > <i class="fa-solid fa-square-xmark pe-2"></i>{{mensajesdeErrores.errortelefono}}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-sm-6 col-xs-12">
+                    <!------asunto------>
+                    <div class="mb-3">
+                      <label for="asunto" class="form-label">Asunto</label>
+                      <input type="text" class="form-control" name="asunto" id="asunto" placeholder="asunto" formControlName="asunto" appValidacion [inputcontrol]="getControl('asunto')" (onEnviomensajeError)="mensajesdeErrores.errorasunto=$event">
+                      <div>
+                        <p *ngIf="mensajesdeErrores.errorasunto" class="text-light px-3 p-1 bg-danger bg-opacity-75" ><i class="fa-solid fa-square-xmark pe-2"></i>{{mensajesdeErrores.errorasunto}}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-12 col-sm-12 col-xs-12">
+                    <!------mensaje------>
+                    <div class="mb-3">
+                      <div class="form-floating">
+                          <textarea class="form-control" style="resize: none; height: 100px;" name="mensaje" placeholder="mensaje" id="mesaje" formControlName="mensaje" appValidacion [inputcontrol]="getControl('mensaje')" (onEnviomensajeError)="mensajesdeErrores.errormensaje=$event"></textarea>
+                          <label for="mesaje">Mensaje</label>
+                          <div>
+                            <p  *ngIf="mensajesdeErrores.errormensaje" class="text-light px-3 p-1 bg-danger bg-opacity-75"> <i class="fa-solid fa-square-xmark pe-2"></i>{{mensajesdeErrores.errormensaje}}</p>
+                          </div>
+                      </div>
+                    </div>
+                </div>
                   
-                    <p *ngIf="mensajesdeErrores.errornombre"  class="text-light px-3 p-1 bg-danger bg-opacity-75"><i class="fa-solid fa-square-xmark pe-2"></i> {{mensajesdeErrores.errornombre}}</p>
-                 
+                </div>
+                <div *ngIf="formRegistro.valid==true">
+                  <p class="text-center bg-success my-4 p-2 text-light fw-bold "> <i class="fa-solid fa-square-check"></i> Datos Correctos</p>
+              </div>
+                <!------boton------>
+                <div *ngIf="formRegistro.invalid==true else validoboton">
+                    <button [disabled]="true" type="submit" class="w-100 btn btn-primary">Enviar</button>
                 </div>
 
-                <!------correo------>
-                <div class="mb-3">
-                  <label for="correo" class="form-label">Correo</label>
-                  <input type="text" class="form-control" name="correo" id="correo" placeholder="alondra@gmail.com" formControlName="correo" appValidacion [inputcontrol]="getControl('correo')" (onEnviomensajeError)="mensajesdeErrores.errorcorreo=$event" >
-                  <div>
-                    <p *ngIf="mensajesdeErrores.errorcorreo" class="text-light px-3 p-1 bg-danger bg-opacity-75"> <i class="fa-solid fa-square-xmark pe-2"></i> {{mensajesdeErrores.errorcorreo}}</p>
-                  </div>
-                </div>
-                <!------telefono------>
-                <div class="mb-3">
-                    <label for="telefono" class="form-label">telefono</label>
-                    <input type="number" class="form-control" name="telefono" id="telefono" formControlName="telefono" appValidacion [inputcontrol]="getControl('telefono')" (onEnviomensajeError)="mensajesdeErrores.errortelefono=$event">
-                    <div>
-                      <p *ngIf="mensajesdeErrores.errortelefono" class="text-light px-3 p-1 bg-danger bg-opacity-75" > <i class="fa-solid fa-square-xmark pe-2"></i>{{mensajesdeErrores.errortelefono}}</p>
-                    </div>
-                  </div>
-                <!------asunto------>
-                <div class="mb-3">
-                    <label for="asunto" class="form-label">asunto</label>
-                    <input type="text" class="form-control" name="asunto" id="asunto" placeholder="asunto" formControlName="asunto" appValidacion [inputcontrol]="getControl('asunto')" (onEnviomensajeError)="mensajesdeErrores.errorasunto=$event">
-                    <div>
-                      <p *ngIf="mensajesdeErrores.errorasunto" class="text-light px-3 p-1 bg-danger bg-opacity-75" ><i class="fa-solid fa-square-xmark pe-2"></i>{{mensajesdeErrores.errorasunto}}</p>
-                    </div>
-                  </div>
-                <!------mensaje------>
-                <div class="mb-3">
-                    <div class="form-floating">
-                        <textarea class="form-control" style="resize: none; height: 100px;" name="mensaje" placeholder="mensaje" id="mesaje" formControlName="mensaje" appValidacion [inputcontrol]="getControl('mensaje')" (onEnviomensajeError)="mensajesdeErrores.errormensaje=$event"></textarea>
-                        <label for="mesaje">mensaje</label>
-                        <div>
-                          <p  *ngIf="mensajesdeErrores.errormensaje" class="text-light px-3 p-1 bg-danger bg-opacity-75"> <i class="fa-solid fa-square-xmark pe-2"></i>{{mensajesdeErrores.errormensaje}}</p>
-                        </div>
-                    </div>
-                </div>
-                <!------boton------>
-                <div>
-                    <button type="submit" class="w-100 btn btn-primary">Enviar</button>
-                </div>
+                <ng-template #validoboton>
+                  <button  type="submit" class="w-100 btn btn-primary">Enviar</button>
+                </ng-template>
               </form>
-              <div>
-                {{formRegistro.valid }}
-              </div>
+              
         </div>
     </div>  
 </div>

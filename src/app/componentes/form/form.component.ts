@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-form',
@@ -61,10 +62,15 @@ export class FormComponent implements OnInit {
     });
     
   }
+  //obtiene el nombre del control  lo devuelve como  formcontrol
   getControl(nombre:string){
     return this.formRegistro.get(nombre) as FormControl; 
   }
   enviar():void{
-    console.log("envio")    
+    Swal.fire({
+      icon: 'success',
+      title: 'Datos Enviados',
+    })
+
   }
 }
